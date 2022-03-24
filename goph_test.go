@@ -64,9 +64,9 @@ func gosshAuthTest(t *testing.T) {
 	newServer("2020")
 
 	_, err := gossh.NewConn(&gossh.Config{
-		Addr:     "127.0.10.10",
+		Addr:     "127.0.0.1",
 		Port:     2020,
-		User:     "melbahja",
+		User:     "bugfan",
 		Auth:     gossh.Password("123456"),
 		Callback: ssh.InsecureIgnoreHostKey(),
 	})
@@ -83,7 +83,7 @@ func gosshRunTest(t *testing.T) {
 	client, err := gossh.NewConn(&gossh.Config{
 		Addr:     "127.0.10.10",
 		Port:     2021,
-		User:     "melbahja",
+		User:     "bugfan",
 		Auth:     gossh.Password("123456"),
 		Callback: ssh.InsecureIgnoreHostKey(),
 	})
@@ -106,7 +106,7 @@ func gosshWrongPassTest(t *testing.T) {
 	_, err := gossh.NewConn(&gossh.Config{
 		Addr:     "127.0.10.10",
 		Port:     2022,
-		User:     "melbahja",
+		User:     "bugfan",
 		Auth:     gossh.Password("12345"),
 		Callback: ssh.InsecureIgnoreHostKey(),
 	})
@@ -122,7 +122,7 @@ func newServer(port string) {
 		// Remove to disable password auth.
 		PasswordCallback: func(c ssh.ConnMetadata, pass []byte) (*ssh.Permissions, error) {
 			// a production setting.
-			if c.User() == "melbahja" && string(pass) == "123456" {
+			if c.User() == "bugfan" && string(pass) == "123456" {
 				return nil, nil
 			}
 			return nil, fmt.Errorf("password rejected for %q", c.User())
