@@ -1,4 +1,4 @@
-package goph_test
+package gossh_test
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"net"
 	"testing"
 
-	goph "github.com/bugfan/gossh"
+	"github.com/bugfan/gossh"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -54,20 +54,20 @@ nSldt0EXsaCKmRAAAADm1vaGFtZWRAZGV2MHgwAQIDBA==
 
 func TestGoph(t *testing.T) {
 
-	t.Run("gophRunTest", gophRunTest)
-	t.Run("gophAuthTest", gophAuthTest)
-	t.Run("gophWrongPassTest", gophWrongPassTest)
+	t.Run("gosshRunTest", gosshRunTest)
+	t.Run("gosshAuthTest", gosshAuthTest)
+	t.Run("gosshWrongPassTest", gosshWrongPassTest)
 }
 
-func gophAuthTest(t *testing.T) {
+func gosshAuthTest(t *testing.T) {
 
 	newServer("2020")
 
-	_, err := goph.NewConn(&goph.Config{
+	_, err := gossh.NewConn(&gossh.Config{
 		Addr:     "127.0.10.10",
 		Port:     2020,
 		User:     "melbahja",
-		Auth:     goph.Password("123456"),
+		Auth:     gossh.Password("123456"),
 		Callback: ssh.InsecureIgnoreHostKey(),
 	})
 
@@ -76,15 +76,15 @@ func gophAuthTest(t *testing.T) {
 	}
 }
 
-func gophRunTest(t *testing.T) {
+func gosshRunTest(t *testing.T) {
 
 	newServer("2021")
 
-	client, err := goph.NewConn(&goph.Config{
+	client, err := gossh.NewConn(&gossh.Config{
 		Addr:     "127.0.10.10",
 		Port:     2021,
 		User:     "melbahja",
-		Auth:     goph.Password("123456"),
+		Auth:     gossh.Password("123456"),
 		Callback: ssh.InsecureIgnoreHostKey(),
 	})
 
@@ -99,15 +99,15 @@ func gophRunTest(t *testing.T) {
 	}
 }
 
-func gophWrongPassTest(t *testing.T) {
+func gosshWrongPassTest(t *testing.T) {
 
 	newServer("2022")
 
-	_, err := goph.NewConn(&goph.Config{
+	_, err := gossh.NewConn(&gossh.Config{
 		Addr:     "127.0.10.10",
 		Port:     2022,
 		User:     "melbahja",
-		Auth:     goph.Password("12345"),
+		Auth:     gossh.Password("12345"),
 		Callback: ssh.InsecureIgnoreHostKey(),
 	})
 

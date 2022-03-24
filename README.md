@@ -50,12 +50,12 @@ import (
 func main() {
 
 	// Start new ssh connection with private key.
-	auth, err := goph.Key("/home/yourname/.ssh/id_rsa", "")
+	auth, err := gossh.Key("/home/yourname/.ssh/id_rsa", "")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client, err := goph.New("root", "192.1.1.3",22, auth)
+	client, err := gossh.New("root", "192.1.1.3",22, auth)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,27 +77,27 @@ func main() {
 
 #### 🔐 Start Connection With Protected Private Key:
 ```go
-auth, err := goph.Key("/home/yourname/.ssh/id_rsa", "you_passphrase_here")
+auth, err := gossh.Key("/home/yourname/.ssh/id_rsa", "you_passphrase_here")
 if err != nil {
 	// handle error
 }
 
-client, err := goph.New("root", "192.1.1.3",22, auth)
+client, err := gossh.New("root", "192.1.1.3",22, auth)
 ```
 
 #### 🔑 Start Connection With Password:
 ```go
-client, err := goph.New("root", "192.1.1.3",22, goph.Password("you_password_here"))
+client, err := gossh.New("root", "192.1.1.3",22, gossh.Password("you_password_here"))
 ```
 
 #### ☛ Start Connection With SSH Agent (Unix systems only):
 ```go
-auth, err := goph.UseAgent()
+auth, err := gossh.UseAgent()
 if err != nil {
 	// handle error
 }
 
-client, err := goph.New("root", "192.1.1.3",22, auth)
+client, err := gossh.New("root", "192.1.1.3",22, auth)
 ```
 
 #### ⤴️ Upload Local File to Remote:
@@ -130,10 +130,10 @@ out, err := client.Run(`env MYVAR="MY VALUE" bash -c 'echo $MYVAR;'`)
 
 #### 🥪 Using Goph Cmd:
 
-`Goph.Cmd` struct is like the Go standard `os/exec.Cmd`.
+`gossh.Cmd` struct is like the Go standard `os/exec.Cmd`.
 
 ```go
-// Get new `Goph.Cmd`
+// Get new `gossh.Cmd`
 cmd, err := client.Command("ls", "-alh", "/tmp")
 
 // or with context:
